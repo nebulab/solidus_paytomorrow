@@ -13,16 +13,14 @@ module SolidusPayTomorrow
 
     initializer 'solidus_pay_tomorrow.add_static_preference', after: 'spree.register.payment_methods' do |app|
       app.config.spree.payment_methods << 'SolidusPayTomorrow::PaymentMethod'
-      app.config.to_prepare do
-        Spree::Config.static_model_preferences.add(
-          SolidusPayTomorrow::PaymentMethod,
-          'pt_credentials', {
-            username: ENV['PAY_TOMORROW_USERNAME'],
-            password: ENV['PAY_TOMORROW_PASSWORD'],
-            signature: ENV['PAY_TOMORROW_SIGNATURE']
-          }
-        )
-      end
+      Spree::Config.static_model_preferences.add(
+        SolidusPayTomorrow::PaymentMethod,
+        'pt_credentials', {
+          username: ENV['PAY_TOMORROW_USERNAME'],
+          password: ENV['PAY_TOMORROW_PASSWORD'],
+          signature: ENV['PAY_TOMORROW_SIGNATURE']
+        }
+      )
     end
 
     # use rspec for tests
